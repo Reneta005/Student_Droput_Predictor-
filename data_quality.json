@@ -1,0 +1,91 @@
+{
+  "rows": 4424,
+  "columns_including_target": 37,
+  "duplicate_rows": 0,
+  "missing_cells": 0,
+  "target_counts": {
+    "Graduate": 2209,
+    "Dropout": 1421,
+    "Enrolled": 794
+  },
+  "unique_values": {
+    "Application mode": [
+      1,
+      2,
+      5,
+      7,
+      10,
+      15,
+      16,
+      17,
+      18,
+      26,
+      27,
+      39,
+      42,
+      43,
+      44,
+      51,
+      53,
+      57
+    ],
+    "Course": [
+      33,
+      171,
+      8014,
+      9003,
+      9070,
+      9085,
+      9119,
+      9130,
+      9147,
+      9238,
+      9254,
+      9500,
+      9556,
+      9670,
+      9773,
+      9853,
+      9991
+    ],
+    "Previous qualification": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      9,
+      10,
+      12,
+      14,
+      15,
+      19,
+      38,
+      39,
+      40,
+      42,
+      43
+    ],
+    "Daytime/evening attendance": [
+      0,
+      1
+    ],
+    "Scholarship holder": [
+      0,
+      1
+    ],
+    "Debtor": [
+      0,
+      1
+    ],
+    "Gender": [
+      0,
+      1
+    ],
+    "Education Special Needs": [
+      0,
+      1
+    ]
+  }
+}
