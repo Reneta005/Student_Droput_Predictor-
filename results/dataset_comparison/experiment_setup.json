@@ -1,0 +1,22 @@
+{
+  "folds": 5,
+  "seed": 42,
+  "original_target": "Dropout=1; Enrolled and Graduate=0",
+  "oulad_target": "Withdrawn=1; Pass/Fail/Distinction=0",
+  "models": [
+    "Logistic regression",
+    "XGBoost",
+    "Random forest",
+    "Linear SVM",
+    "MLP",
+    "Soft vote (LR + XGBoost)"
+  ],
+  "mlp": "32/16 hidden units; balanced sample weights computed on training data only; early stopping",
+  "ensemble": "equal soft-vote average of logistic-regression and XGBoost probabilities",
+  "oulad_grouping": "all presentations for a student stay in one fold",
+  "cross_dataset_features": [
+    "gender_harmonized",
+    "age_group_harmonized"
+  ],
+  "cross_dataset_warning": "OULAD Withdrawn means withdrawn from a module-presentation, not necessarily university dropout; transfer results are exploratory and not directly equivalent."
+}

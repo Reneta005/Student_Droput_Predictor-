@@ -6,5 +6,5 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-py -m streamlit run app.py
+py run_app.py
 pause

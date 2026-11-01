@@ -1,38 +1,43 @@
-# Student Dropout Early-Warning ML
+# Student Dropout Early-Warning Project
 
-A reproducible two-stage binary classification pipeline for the supplied student dataset. It trains only from the supplied data; no synthetic predictions or examples are included.
+This project compares models that estimate dropout risk at enrollment and after first-semester information is available. It includes a Streamlit website for staff-style assessment and model comparison.
 
-## Run
+## Run it
 
-Requires Python 3.10+.
+On Windows, double-click `start_dashboard.bat`.
 
-```powershell
-py -m pip install -r requirements.txt
-py clean_data.py data.csv --output cleaned_data.csv --report data_quality.json
-py train_evaluate.py cleaned_data.csv --output-dir results
-```
-
-The training command uses one stratified 80/20 split (random seed 42) shared by both stages. It saves four fitted pipelines under `results/models`, metrics CSV/Markdown, stage-change tables, a split record, and SHAP bar plots for the random forest models. Threshold is 0.50 by default; use validation data to select a different threshold before deployment.
-
-## Feature policy
-
-- Stage 1: admission grade, previous qualification grade, age, course, application mode, attendance mode, scholarship holder, debtor, gender, and education special needs.
-- Stage 2: the same fields plus first-semester units approved and first-semester grade.
-- No second-semester fields are passed to either model. They describe a later outcome period and create leakage.
-- Target is 1 for `Dropout` and 0 for both `Enrolled` and `Graduate`.
-- Integer codes for course and application mode are one-hot encoded, not treated as ordered values. For official code definitions, use the [UCI dataset page and variable table](https://archive.ics.uci.edu/dataset/697/predict%2Bstudents%2Bdropout%2Band%2Bacademic%2Bsuccess).
-
-## Outputs
-
-See `analysis.md` for results and limitations, `data_quality.json` for checks, `results/metrics_comparison.md` for the comparison, and `results/plots/` for SHAP images. The trained `.joblib` files are serialized Python objects; load only artifacts you trust.
-
-## Launch the website
-
-The project includes a Streamlit dashboard that loads the saved Stage 1 and Stage 2 random-forest pipelines, including their fitted preprocessing. It does not generate placeholder predictions. Install the requirements once, then start it:
+Or open PowerShell in this folder and run:
 
 ```powershell
 py -m pip install -r requirements.txt
-py -m streamlit run app.py
+py run_app.py
 ```
 
-On Windows, you can double-click `start_dashboard.bat` to install dependencies and open the app. In the dashboard, use the rectangular **Student assessment** and **Model results** tabs. The student page asks for an institutional reference and labeled enrollment fields; choose whether the assessment is at enrollment or after first semester, then run it. The other tab contains the performance table and SHAP plots. The **Night mode** switch changes the page colors. Student entries are not saved by this prototype. Keep internet access available for the first install.
+The browser opens the website with three tabs:
+
+- **Students at risk:** choose a course and enrollment or first-semester information to list records above the review threshold. Select a record to see its SHAP explanation.
+- **Prediction:** enter one student's information to get an ensemble score and a SHAP explanation of which inputs raised or lowered it.
+- **Model results:** see cross-validation comparisons, ensemble members, the dataset comparison, and global SHAP plots.
+
+The first run can take several minutes while models and explanations are prepared. Later runs start faster.
+
+## What to upload to GitHub
+
+Upload this project folder. Keep these files in the repository:
+
+- Python scripts (`.py`), `README.md`, `requirements.txt`, and `start_dashboard.bat`
+- `data.csv` and `oulad_student_level.csv` (the two input datasets needed to run the project)
+
+The `.gitignore` file excludes generated models, reports, caches, and temporary files. The app recreates those locally when someone runs it, so you do not need to upload large model files.
+
+## Push changes later
+
+Using GitHub Desktop: add this local folder as a repository, publish it to your GitHub account, then whenever you change code, write a short commit message and click **Commit to main** followed by **Push origin**. The `.gitignore` keeps generated outputs out of the upload.
+
+## Project notes
+
+- Stage 1 uses enrollment-time information. Stage 2 adds first-semester academic information. No second-semester fields are used.
+- The original dataset target is Dropout versus Enrolled/Graduate. OULAD's `Withdrawn` outcome means withdrawal from a module presentation, not necessarily leaving university. The datasets are analyzed separately; cross-dataset transfer is exploratory.
+- The original dataset has no student names or IDs. At-risk list references are anonymous dataset row numbers, not real identities; use the view to demonstrate screening, not to contact actual students.
+- Model scores are screening aids, not diagnoses or calibrated probabilities. SHAP describes model associations, not causes.
+- `consolidate_oulad.py` documents how the linked OULAD tables were combined. The included `oulad_student_level.csv` is sufficient to run the app.
