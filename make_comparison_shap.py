@@ -1,5 +1,4 @@
 """Generate SHAP global and one-record explanations for recall-focused models.
-
 Uses the first stratified fold from the model comparison experiment, so the
 explained records are held out from model fitting. Outputs are model-score
 contributions, not causal claims or calibrated individual probabilities.
